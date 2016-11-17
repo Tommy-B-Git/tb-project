@@ -9,7 +9,7 @@ def index():
 
 @app.route("/basic")
 def basic():
-  return "This will be the basic signup page"
+  return render_template("signUp.html")
 
 @app.route("/premium")
 def premium():
