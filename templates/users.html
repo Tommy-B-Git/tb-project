@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CallBack | Home</title>
+    {% include 'head.html' %}
+  </head>
+
+  <body>
+    {% include 'navigation.html' %}
+    <!-- start of form container-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="appHeaders text-center">Welcome to CallBack <i class="fa fa-heart-o" aria-hidden="true"></i></h1>
+          <p class="text-center bigText">CallBack is a dating website for
+          Developers and Coders</p>
+        </div>
+      </div> <!-- end row -->
+    </div> <!-- end container -->
+    <div class="container">{% include 'createSee.html' %}</div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</html>
