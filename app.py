@@ -7,13 +7,21 @@ app = Flask(__name__)
 def index():
   return render_template("base.html")
 
-@app.route("/basic")
+@app.route("/basic", methods=['GET', 'POST'])
 def basic():
   return render_template("signUp.html")
 
 @app.route("/premium")
 def premium():
   return "This will be the Premium signup page"
+
+@app.route("/users", methods=['GET', 'POST'])
+def users():
+  return render_template("users.html")
+
+@app.route("/users/new")
+def create_profile():
+  return "This is the create profile page"
 
 #custom 404 Route
 @app.errorhandler(404)
