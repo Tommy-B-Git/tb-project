@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, abort, request, render_template, json
 from werkzeug.utils import secure_filename
+import sqlite3 as sql
 
 app = Flask(__name__)
 
@@ -7,7 +8,7 @@ app = Flask(__name__)
 def index():
   return render_template("base.html")
 
-@app.route("/basic", methods=['GET', 'POST'])
+@app.route("/basic")
 def basic():
   return render_template("signUp.html")
 
@@ -15,9 +16,25 @@ def basic():
 def premium():
   return "This will be the Premium signup page"
 
-@app.route("/users", methods=['GET', 'POST'])
-def users():
-  return render_template("users.html")
+@app.route("/adduser", methods=['GET', 'POST'])
+def adduser():
+  if request.method == 'POST':
+    try:
+      email = request.form['user_email']
+      password = request.form['user_password']
+         
+      with sql.connect("database.db") as con:
+        cur = con.cursor()
+        cur.execute("INSERT INTO users (user_email,user_password) VALUES (?,?)",(email,password))
+        con.commit()
+        msg = "Record successfully added"
+    except:
+      con.rollback()
+      msg = "error in insert operation"
+      
+    finally:
+      return render_template("createSee.html",msg = msg)
+      con.close()
 
 @app.route("/users/new")
 def create_profile():
