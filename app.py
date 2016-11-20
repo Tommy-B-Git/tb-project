@@ -1,6 +1,5 @@
 from flask import Flask, redirect, url_for, abort, request, render_template, json, g, session, flash
 import sqlite3
-import models as dbHandler
 
 app = Flask(__name__)
 
@@ -12,14 +11,24 @@ def index():
 def basic():
   return render_template("signUp.html")
 
-@app.route("/adduser", methods=['GET', 'POST'])
+@app.route('/adduser',methods = ['POST', 'GET'])
 def adduser():
   if request.method == 'POST':
-    email = request.form['user_email']
-    password = request.form['user_password']
-    dbHandler.insertUser(email, password)
-    user = dbHandler.retrieveUsers()
-    return render_template("createSee.html", user=user)
+    try:
+      email = request.form['user_email']
+      password = request.form['user_password']
+
+      with sql.connect('myData.db') as con:
+        cur = con.cursor()
+        cur.execute("INSERT INTO users (email,password) VALUES (?,?)",(email,password) )
+        con.commit()
+        msg = "Record successfully added"
+    except:
+      con.rollback()
+      msg = "error in insert operation"
+    finally:
+      return redirect(url_for('create_profile'))
+      con.close()
   else:
     return render_template("signUp.html")
 
@@ -29,7 +38,7 @@ def premium():
 
 @app.route("/users/new")
 def create_profile():
-  return "This is the create profile page"
+  return render_template('users.html')
 
 #custom 404 Route
 @app.errorhandler(404)
