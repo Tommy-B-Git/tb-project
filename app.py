@@ -1,6 +1,5 @@
-from flask import Flask, redirect, url_for, abort, request, render_template, json
-from werkzeug.utils import secure_filename
-import sqlite3 as sql
+from flask import Flask, redirect, url_for, abort, request, render_template, json, g
+import sqlite3 
 
 app = Flask(__name__)
 
