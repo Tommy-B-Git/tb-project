@@ -29,9 +29,40 @@ def init_db():
 # End of DB stuff
 #################
 
+
+# Validate login
+def validate(email, password):
+  conn = sqlite3.connect('var/database.db')
+  with conn:
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM users')
+    rows = cur.fetchall()
+    for row in rows:
+      dbEmail = row[0]
+      dbPass = row[1]
+      if  dbEmail == email and  dbPass == password:
+        return True
+      else:
+        return False 
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+  error=None
+  success=None
+  if request.method == 'POST':
+    email = request.form['user_email']
+    password = request.form['user_password']
+    if validate(email, password):
+      success = 'You have succesfully logged in'
+      return redirect(url_for('members', success=success))
+    else:
+      error = 'Wrong details. Try again'
+  return render_template("login.html", error=error)
+
 @app.route("/")
 def index():
-  return render_template("base.html")
+ return render_template("base.html")
+
 
 @app.route("/basic")
 def basic():
@@ -50,6 +81,10 @@ def adduser():
     return render_template('users.html',msg=msg)
   else:
     return render_template("signUp.html")
+
+@app.route("/members")
+def members():
+ return render_template('users.html')
 
 @app.route("/premium")
 def premium():
