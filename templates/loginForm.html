@@ -1,5 +1,5 @@
 <div class="well">
-<form action="{{ url_for('adduser') }}" method="post">
+<form action="{{ url_for('login') }}" method="post">
   <div class="field form-group">
     <label for="user_email">Email</label>
     <br>
@@ -14,8 +14,7 @@
   </div>
   <div class="actions form-group">
     <br>
-    <input class="btn btn-success" name="commit" type="submit" value="Sign up">
+    <input class="btn btn-success" name="commit" type="submit" value="Log In">
   </div>  
 </form>
-<a href="{{ url_for('login') }}">Log in</a>
 </div>
