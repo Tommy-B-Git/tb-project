@@ -2,6 +2,32 @@ from flask import Flask, redirect, url_for, abort, request, render_template, jso
 import sqlite3
 
 app = Flask(__name__)
+db_location = 'var/database.db'
+
+# Start of DB stuff
+###################
+def get_db():
+  db = getattr(g, 'db', None)
+  if db is None:
+    db = sqlite3.connect(db_location)
+    g.db = db
+  return db
+
+@app.teardown_appcontext
+def close_db_connection(exception):
+  db = getattr(g, 'db', None)
+  if db is not None:
+    db.close()
+
+def init_db():
+  with app.app_context():
+    db = get_db()
+    with app.open_resource('schema.sql', mode='r') as f:
+      db.cursor().executescript(f.read())
+    db.commit()
+
+# End of DB stuff
+#################
 
 @app.route("/")
 def index():
@@ -14,21 +40,14 @@ def basic():
 @app.route('/adduser',methods = ['POST', 'GET'])
 def adduser():
   if request.method == 'POST':
-    try:
-      email = request.form['user_email']
-      password = request.form['user_password']
-
-      with sql.connect('myData.db') as con:
-        cur = con.cursor()
-        cur.execute("INSERT INTO users (email,password) VALUES (?,?)",(email,password) )
-        con.commit()
-        msg = "Record successfully added"
-    except:
-      con.rollback()
-      msg = "error in insert operation"
-    finally:
-      return redirect(url_for('create_profile'))
-      con.close()
+    email = request.form['user_email']
+    password = request.form['user_password']
+    
+    db = get_db()
+    db.cursor().execute("INSERT INTO users (email,password) VALUES (?,?)", (email,password) )
+    db.commit()
+    msg = "Account created, now create your profile"
+    return render_template('users.html',msg=msg)
   else:
     return render_template("signUp.html")
 
@@ -38,7 +57,7 @@ def premium():
 
 @app.route("/users/new")
 def create_profile():
-  return render_template('users.html')
+  return render_template('newProfile.html')
 
 #custom 404 Route
 @app.errorhandler(404)
