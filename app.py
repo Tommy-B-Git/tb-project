@@ -6,8 +6,13 @@ import sqlite3
 app = Flask(__name__)
 db_location = 'var/database.db'
 
-app.secret_key = 'A0Zr98j/3yXR~XHH!jmN]LWX/,?RT'
-valid_pwhash = bcrypt.hashpw('secretpass', bcrypt.gensalt())
+app.secret_key = 'a_really_secret_key'
+
+
+@app.route("/")
+def index():
+ return render_template("base.html")
+
 
 # Start of DB stuff
 ###################
@@ -38,7 +43,6 @@ def init_db():
 # Validate login
 def validate(email, password):
   conn = sqlite3.connect('var/database.db')
-  valid_pwhash == bcrypt.hashpw(password.encode('utf-8'), valid_pwhash)
   with conn:
     cur = conn.cursor()
     cur.execute('SELECT * FROM users')
@@ -49,22 +53,22 @@ def validate(email, password):
       #if  dbEmail == email and dbPass == password:
       if dbEmail == email and dbPass == password:
         return True
-      else:
-        return False 
+      else:  
+        return False
 
 def requires_login(f):
   @wraps(f)
   def decorated(*args, **kwargs):
     status = session.get('logged_in', False)
     if not status:
-      return redirect(url_for('login'))
+      return redirect(url_for('index'))
     return f(*args, **kwargs)
   return decorated
 
 @app.route("/logout/")
 def logout():
   session['logged_in'] = False
-  return redirect(url_for('login'))
+  return redirect(url_for('index'))
 
 @app.route("/members")
 @requires_login
@@ -81,14 +85,10 @@ def login():
     if validate(email, password):
       session['logged_in'] = True
       success = 'You have succesfully logged in'
-      return redirect(url_for('.members'))
+      return redirect(url_for('members'))
     else:
       error = 'Wrong details. Try again'
-  return render_template("login.html", error=error)
-
-@app.route("/")
-def index():
- return render_template("base.html")
+      return render_template("login.html", error=error)
 
 
 @app.route("/basic")
@@ -100,7 +100,9 @@ def adduser():
   if request.method == 'POST':
     email = request.form['user_email']
     password = request.form['user_password']
-    
+    # Try to hash and salt password
+    password = bcrypt.hashpw(password, bcrypt.gensalt())
+
     db = get_db()
     db.cursor().execute("INSERT INTO users (email,password) VALUES (?,?)", (email,password) )
     db.commit()
@@ -114,7 +116,7 @@ def adduser():
 def premium():
   return "This will be the Premium signup page"
 
-@app.route("/users/new")
+@app.route("/user/new")
 def create_profile():
   return render_template('newProfile.html')
 
