@@ -4,13 +4,13 @@
     <label for="user_email">Email</label>
     <br>
     <input autofocus="autofocus" class="form-control" name="user_email"
-    type="email">
+    type="email" value="{{ request.form.user_email }}">
   </div>
   <div class="field form-group">
     <label for="user_password">Password</label>
     <br>
     <input autocomplete="off" class="form-control" name="user_password"
-    type="password">
+    type="password" value="{{ request.form.user_password }}">
   </div>
   <div class="actions form-group">
     <br>
