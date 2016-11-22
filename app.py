@@ -50,20 +50,21 @@ def validate(email, password):
     for row in rows:
       dbEmail = row[0]
       dbPass = row[1]
-      #if  dbEmail == email and dbPass == password:
-      if dbEmail == email and dbPass == password:
+      if  dbEmail == email and dbPass == password:
+      #if (dbEmail == email and dbPass ==
+      #bcrypt.hashpw(password.encode('utf-8'), password)):
         return True
       else:  
         return False
 
-def requires_login(f):
-  @wraps(f)
-  def decorated(*args, **kwargs):
-    status = session.get('logged_in', False)
-    if not status:
-      return redirect(url_for('index'))
-    return f(*args, **kwargs)
-  return decorated
+#def requires_login(f):
+ # @wraps(f)
+  #def decorated(*args, **kwargs):
+   # status = session.get('logged_in', False)
+    #if not status:
+     # return redirect(url_for('index'))
+   # return f(*args, **kwargs)
+  #return decorated
 
 @app.route("/logout/")
 def logout():
@@ -71,7 +72,7 @@ def logout():
   return redirect(url_for('index'))
 
 @app.route("/members")
-@requires_login
+#@requires_login
 def members():
   return render_template('users.html')
 
@@ -87,27 +88,29 @@ def login():
       success = 'You have succesfully logged in'
       return redirect(url_for('members'))
     else:
-      error = 'Wrong details. Try again'
-      return render_template("login.html", error=error)
+      error =  'Still not working'
+  return render_template("login.html", error=error)
 
 
 @app.route("/basic")
 def basic():
   return render_template("signUp.html")
 
+
+# signUp.html brings you here
 @app.route('/adduser',methods = ['POST', 'GET'])
 def adduser():
   if request.method == 'POST':
     email = request.form['user_email']
     password = request.form['user_password']
     # Try to hash and salt password
-    password = bcrypt.hashpw(password, bcrypt.gensalt())
+    #password = bcrypt.hashpw(password, bcrypt.gensalt())
 
     db = get_db()
     db.cursor().execute("INSERT INTO users (email,password) VALUES (?,?)", (email,password) )
     db.commit()
     msg = "Account created, now create your profile"
-    return render_template('users.html',msg=msg)
+    return redirect(url_for('login'))
   else:
     return render_template("signUp.html")
 
