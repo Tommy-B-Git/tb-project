@@ -3,6 +3,7 @@ from functools import wraps
 from flask import Flask, redirect, url_for, abort, request, render_template, json, g, session, flash
 import sqlite3
 
+#Application Object
 app = Flask(__name__)
 db_location = 'var/database.db'
 
@@ -43,6 +44,7 @@ def init_db():
 # Validate login
 def validate(email, password):
   conn = sqlite3.connect('var/database.db')
+  completion = False
   with conn:
     cur = conn.cursor()
     cur.execute('SELECT * FROM users')
@@ -51,28 +53,33 @@ def validate(email, password):
       dbEmail = row[0]
       dbPass = row[1]
       if  dbEmail == email and dbPass == password:
+      # CHECK HASHED PW 
       #if (dbEmail == email and dbPass ==
       #bcrypt.hashpw(password.encode('utf-8'), password)):
         return True
-      else:  
+      else:
         return False
 
-#def requires_login(f):
- # @wraps(f)
-  #def decorated(*args, **kwargs):
-   # status = session.get('logged_in', False)
-    #if not status:
-     # return redirect(url_for('index'))
-   # return f(*args, **kwargs)
-  #return decorated
+# requires_login decorator
+def requires_login(f):
+  @wraps(f)
+  def decorated(*args, **kwargs):
+    if 'logged_in' in session:
+      return f(*args, **kwargs)
+    else:
+      flash('You need to login')
+      return redirect(url_for('login'))
+  return decorated
 
-@app.route("/logout/")
+@app.route("/logout")
+@requires_login
 def logout():
-  session['logged_in'] = False
+  session.pop('logged_in', None)
+  flash("You were logged out")
   return redirect(url_for('index'))
 
 @app.route("/members")
-#@requires_login
+@requires_login
 def members():
   return render_template('users.html')
 
@@ -85,10 +92,10 @@ def login():
     password = request.form['user_password']
     if validate(email, password):
       session['logged_in'] = True
-      success = 'You have succesfully logged in'
+      #success = 'You have succesfully logged in'
       return redirect(url_for('members'))
     else:
-      error =  'Still not working'
+      error = "Wrong details, try again!"
   return render_template("login.html", error=error)
 
 
