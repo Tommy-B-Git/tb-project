@@ -44,18 +44,17 @@ def init_db():
 # Validate login
 def validate(email, password):
   conn = sqlite3.connect('var/database.db')
-  completion = False
   with conn:
     cur = conn.cursor()
-    cur.execute('SELECT * FROM users')
+    cur.execute('SELECT * FROM users WHERE email=(?)', (email,))
     rows = cur.fetchall()
     for row in rows:
       dbEmail = row[0]
       dbPass = row[1]
+      #print(dbEmail, email, dbPass, password)
       if  dbEmail == email and dbPass == password:
       # CHECK HASHED PW 
-      #if (dbEmail == email and dbPass ==
-      #bcrypt.hashpw(password.encode('utf-8'), password)):
+      #if (email == dbEmail and password == bcrypt.hashpw(password.encode('utf-8'), password)):
         return True
       else:
         return False
@@ -92,7 +91,7 @@ def login():
     password = request.form['user_password']
     if validate(email, password):
       session['logged_in'] = True
-      #success = 'You have succesfully logged in'
+      success = 'You have succesfully logged in'
       return redirect(url_for('members'))
     else:
       error = "Wrong details, try again!"
@@ -111,7 +110,7 @@ def adduser():
     email = request.form['user_email']
     password = request.form['user_password']
     # Try to hash and salt password
-    #password = bcrypt.hashpw(password, bcrypt.gensalt())
+    #valid_pwhash = bcrypt.hashpw(password, bcrypt.gensalt())
 
     db = get_db()
     db.cursor().execute("INSERT INTO users (email,password) VALUES (?,?)", (email,password) )
