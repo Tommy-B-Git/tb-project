@@ -14,6 +14,11 @@
           <h1 class="appHeaders text-center">Welcome to CallBack <i class="fa fa-heart-o" aria-hidden="true"></i></h1>
           <p class="text-center bigText">CallBack is a dating website for
           Developers and Coders</p>
+          <div class="alert alert-success" role="alert">
+          {% for message in get_flashed_messages() %}
+            {{ message }}
+          {% endfor %}
+          </div>
         </div>
       </div> <!-- end row -->
     </div> <!-- end container -->
