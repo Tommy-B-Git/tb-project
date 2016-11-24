@@ -97,12 +97,12 @@ def my_profile():
     cur = conn.cursor()
     cur.execute('SELECT * FROM profiles')
     rows = cur.fetchall()
-    for row in rows:
-      username = row[0]
-      location = row[1]
-      bio = row[2]
-      gender = row[3]
-      prof_img = row[4]
+    #for row in rows:
+     # username = row[0]
+     # location = row[1]
+     # bio = row[2]
+     # gender = row[3]
+     # prof_img = row[4]
   return "Individual profile pagge here"
 
 # USER LOGIN #
@@ -149,6 +149,7 @@ def adduser():
 @app.route("/user/new",methods = ['GET', 'POST'])
 def create_profile():
   if request.method == 'POST':
+    prof_email = request.form['prof_email']
     username = request.form['username']
     location = request.form['location']
     bio = request.form['bio']
@@ -156,10 +157,10 @@ def create_profile():
     prof_img = request.form['prof_img']
 
     db = get_db()
-    db.cursor().execute("INSERT INTO profiles (username,location,bio,gender,prof_img) VALUES (?,?,?,?,?)",(username,location,bio,gender,prof_img))
+    db.cursor().execute("INSERT INTO profiles(prof_email,username,location,bio,gender,prof_img) VALUES (?,?,?,?,?,?)",(prof_email,username,location,bio,gender,prof_img))
     db.commit()
     msg = "Profile Created!"
-    return redirect(url_for('view_members'))
+    return redirect(url_for('my_profile'))
   else:
     return render_template('newProfile.html')
 
