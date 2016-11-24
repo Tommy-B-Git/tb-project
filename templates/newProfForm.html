@@ -1,6 +1,6 @@
 <!-- Form Name -->
 <form action="{{ url_for('create_profile') }}" method="post">
-<!-- Text input-->
+<!-- USERNAME-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Username</label>  
   <div class="col-md-6">
@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<!-- Text input-->
+<!-- LOCATION-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="location">Location</label>  
   <div class="col-md-6">
@@ -18,30 +18,19 @@
   </div>
 </div>
 
-<!-- Textarea -->
+<!-- BIO -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="bio">About you</label>
   <div class="col-md-4">                     
-    <textarea rows="8" class="form-control" id="bio" name="bio">Write about you and your interests</textarea>
+  <input id="bio" name="bio" type="text" placeholder="What do you like?" class="form-control input-md" required="">
   </div>
 </div>
 
-<!-- Multiple Checkboxes -->
+<!-- GENDER -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="checkboxes">Gender</label>
+  <label class="col-md-4 control-label" for="bio">About you</label>
   <div class="col-md-4">
-  <div class="checkbox">
-    <label for="checkboxes-0">
-      <input type="checkbox" name="gender" id="checkboxes-0" value="1">
-      Male
-    </label>
-  </div>
-  <div class="checkbox">
-    <label for="checkboxes-1">
-      <input type="checkbox" name="gender" id="checkboxes-1" value="2">
-      Female
-    </label>
-  </div>
+  <input id="gender" name="gender" type="text" placeholder="Gender" class="form-control input-md" required="">
   </div>
 </div>
 
