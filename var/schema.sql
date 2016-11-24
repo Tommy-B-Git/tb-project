@@ -6,7 +6,7 @@ drop table if exists users;
 
 drop table if exists profiles;
   create table profiles (
-  email text not null,
+  prof_email text not null,
   username text not null,
   location text not null,
   bio text not null,
@@ -16,7 +16,7 @@ drop table if exists profiles;
 
 drop table if exists premium;
   create table premium (
-  email text not null,
+  prem_email text not null,
   password text not null,
   cc_num integer not null,
   sec_code integer not null
