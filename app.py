@@ -87,23 +87,26 @@ def members():
   else:
     return redirect(url_for('index'))
 
-# MEMBER PROFILE PAGE#
-######################
+# INDIVIDUAL PROFILE PAGE#
+##########################
 @app.route("/members/profile")
 @requires_login
 def my_profile():
   conn = sqlite3.connect('var/database.db')
   with conn:
     cur = conn.cursor()
-    cur.execute('SELECT * FROM profiles')
+    #cur.execute('SELECT * FROM profiles WHERE prof_email=(?)', (prof_email,))
+    #cur.execute('SELECT * FROM profiles')
+    cur.execute('SELECT * FROM profiles JOIN users USING(email)')
     rows = cur.fetchall()
-    #for row in rows:
-     # username = row[0]
-     # location = row[1]
-     # bio = row[2]
-     # gender = row[3]
-     # prof_img = row[4]
-  return "Individual profile pagge here"
+    for row in rows:
+      email = row[0]
+      username = row[1]
+      location = row[2]
+      bio = row[3]
+      gender = row[4]
+      prof_img = row[5]
+  return render_template('myProfile.html', rows=rows)
 
 # USER LOGIN #
 ##############
@@ -149,7 +152,7 @@ def adduser():
 @app.route("/user/new",methods = ['GET', 'POST'])
 def create_profile():
   if request.method == 'POST':
-    prof_email = request.form['prof_email']
+    email = request.form['email']
     username = request.form['username']
     location = request.form['location']
     bio = request.form['bio']
@@ -157,10 +160,10 @@ def create_profile():
     prof_img = request.form['prof_img']
 
     db = get_db()
-    db.cursor().execute("INSERT INTO profiles(prof_email,username,location,bio,gender,prof_img) VALUES (?,?,?,?,?,?)",(prof_email,username,location,bio,gender,prof_img))
+    db.cursor().execute("INSERT INTO profiles(email,username,location,bio,gender,prof_img) VALUES (?,?,?,?,?,?)",(email,username,location,bio,gender,prof_img))
     db.commit()
     msg = "Profile Created!"
-    return redirect(url_for('my_profile'))
+    return redirect(url_for('my_profile', msg=msg))
   else:
     return render_template('newProfile.html')
 
