@@ -18,3 +18,23 @@ h2{
   font-family: 'Raleway';
   font-size: 2.4rem;
 }
+
+.profilesContainer{
+  background-color: #B1EDE8;
+  padding: 6% 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.profText{
+  font-size: 1.6rem;
+  color: #3D518C;
+  margin: 2%;
+}
+
+.profHead{
+  font-weight: bold;
+  margin: 2%;
+  padding: 0;
+}
