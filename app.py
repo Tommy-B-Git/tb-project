@@ -120,22 +120,17 @@ def adduser():
   else:
     return render_template("signUp.html")
 
-
-@app.route("/premium")
-def premium():
-  return "This will be the Premium signup page"
-
 # CREATE PROFILE PAGE
 @app.route("/user/new",methods = ['GET', 'POST'])
 def create_profile():
   if request.method == 'POST':
     username = request.form['username']
     location = request.form['location']
-    bio      = request.form['bio']
-    gender   = request.form.getlist('gender')
-    prof_img  = request.form['prof_img']
+    bio = request.form['bio']
+    gender = request.form['gender']
+    prof_img = request.form['prof_img']
 
-    db = get.db()
+    db = get_db()
     db.cursor().execute("INSERT INTO profiles (username,location,bio,gender,prof_img) VALUES (?,?,?,?,?)",(username,location,bio,gender,prof_img))
     db.commit()
     msg = "Profile Created!"
@@ -143,9 +138,15 @@ def create_profile():
   else:
     return render_template('newProfile.html')
 
-@app.route("/members/view/")
+
+@app.route("/members/view")
 def view_members():
-  return "This will be view members page"
+  return "This will be the View Members page"
+
+@app.route("/premium")
+def premium():
+  return "This will be the Premium signup page"
+
 
 #custom 404 Route
 @app.errorhandler(404)
