@@ -1,11 +1,19 @@
 <!-- Form Name -->
 <form action="{{ url_for('create_profile') }}" method="post">
+
+<!-- EMAIL -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Email</label>
+  <div class="col-md-6">
+  <input id="textinput" name="email" type="text" placeholder="Your email" class="form-control input-md" required="">
+  </div>
+</div>
+
 <!-- USERNAME-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Username</label>  
   <div class="col-md-6">
   <input id="textinput" name="username" type="text" placeholder="username" class="form-control input-md" required="">
-    
   </div>
 </div>
 
@@ -14,7 +22,6 @@
   <label class="col-md-4 control-label" for="location">Location</label>  
   <div class="col-md-6">
   <input id="location" name="location" type="text" placeholder="your location" class="form-control input-md" required="">
-    
   </div>
 </div>
 

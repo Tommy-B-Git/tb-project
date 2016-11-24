@@ -21,13 +21,13 @@
           {% endif %}  
           </div>
         </div>
-        {% for data in result %}
+        {% for row in rows %}
           <div class="">
-          <p class="text-center">{{ data.username }}</p>
-          <p class="text-center">{{ data.location }}</p>
-          <p class="text-center">{{ data.bio }}</p>
-          <p class="text-center">{{ data.gender }}</p>
-          <img src="{{ data.prof_img }}" class="">
+          <p class="text-center">{{ row[0] }}</p>
+          <p class="text-center">{{ row[1] }}</p>
+          <p class="text-center">{{ row[2] }}</p>
+          <p class="text-center">{{ row[3] }}</p>
+          <img src="{{ row[4] }}" class="">
           </div>
         {% endfor %}
       </div> <!-- end row -->
