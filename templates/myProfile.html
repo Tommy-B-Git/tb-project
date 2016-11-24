@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CallBack | My Profile</title>
+    {% include 'head.html' %}
+  </head>
+
+  <body>
+    {% include 'navigation.html' %}
+    <!-- start of form container-->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="appHeaders text-center">Welcome (NAME) to your profile page <i class="fa fa-heart-o" aria-hidden="true"></i></h1>
+          <p class="text-center bigText">This is your profile admin where you
+          can read, update and delete your profile</p>
+          {% if message %}
+            {% for message in get_flashed_messages() %}
+             <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}  
+          </div>
+        </div>
+        {% for data in result %}
+          <div class="">
+          <p class="text-center">{{ data.username }}</p>
+          <p class="text-center">{{ data.location }}</p>
+          <p class="text-center">{{ data.bio }}</p>
+          <p class="text-center">{{ data.gender }}</p>
+          <img src="{{ data.prof_img }}" class="">
+          </div>
+        {% endfor %}
+      </div> <!-- end row -->
+    </div> <!-- end container -->
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</html>
