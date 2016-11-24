@@ -59,7 +59,8 @@ def validate(email, password):
       else:
         return False
 
-# requires_login decorator
+# REQUIRES LOGIN STUFF #
+#######################
 def requires_login(f):
   @wraps(f)
   def decorated(*args, **kwargs):
@@ -80,8 +81,31 @@ def logout():
 @app.route("/members")
 @requires_login
 def members():
-  return render_template('users.html')
+  if session['logged_in']:
+    return redirect(url_for('my_profile'))
+    #return render_tempate("userProfile.html")
+  else:
+    return redirect(url_for('index'))
 
+# MEMBER PROFILE PAGE#
+######################
+@app.route("/members/profile")
+@requires_login
+def my_profile():
+  conn = sqlite3.connect('var/database.db')
+  with conn:
+    cur.execute('SELECT * FROM users JOIN profiles WHERE email=(?)', (email,))
+    rows = cur.fetchall()
+    for row in rows:
+      username = row[0]
+      location = row[1]
+      bio = row[2]
+      gender = row[3]
+      prof_img = row[4]
+  return "Individual profile pagge here"
+
+# USER LOGIN #
+##############
 @app.route("/login", methods=['GET', 'POST'])
 def login():
   error=None
@@ -141,6 +165,16 @@ def create_profile():
 
 @app.route("/members/view")
 def view_members():
+  conn = sqlite3.connect('var/database.db')
+  with conn:
+    cur.execute('SELECT * FROM users JOIN profiles WHERE email=(?)', (email,))
+    rows = cur.fetchall()
+    for row in rows:
+      dbEmail = row[0]
+      dbPass = row[1]
+      dbPass = row[1]
+      dbPass = row[1]
+      dbPass = row[1]
   return "This will be the View Members page"
 
 @app.route("/premium")
