@@ -82,7 +82,7 @@ def logout():
 @requires_login
 def members():
   if session['logged_in']:
-    return redirect(url_for('my_profile'))
+    return "link from here to create profile Page"
     #return render_tempate("userProfile.html")
   else:
     return redirect(url_for('index'))
@@ -94,7 +94,8 @@ def members():
 def my_profile():
   conn = sqlite3.connect('var/database.db')
   with conn:
-    cur.execute('SELECT * FROM users JOIN profiles WHERE email=(?)', (email,))
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM profiles')
     rows = cur.fetchall()
     for row in rows:
       username = row[0]
@@ -167,14 +168,15 @@ def create_profile():
 def view_members():
   conn = sqlite3.connect('var/database.db')
   with conn:
-    cur.execute('SELECT * FROM users JOIN profiles WHERE email=(?)', (email,))
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM profiles')
     rows = cur.fetchall()
-    for row in rows:
-      dbEmail = row[0]
-      dbPass = row[1]
-      dbPass = row[1]
-      dbPass = row[1]
-      dbPass = row[1]
+    #for row in rows:
+      #dbEmail = row[0]
+      #dbPass = row[1]
+      #dbPass = row[1]
+      #dbPass = row[1]
+      #dbPass = row[1]
   return "This will be the View Members page"
 
 @app.route("/premium")
@@ -189,5 +191,3 @@ def page_not_found(error):
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
-
-
