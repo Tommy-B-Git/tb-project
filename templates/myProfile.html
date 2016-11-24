@@ -14,23 +14,26 @@
           <h1 class="appHeaders text-center">Welcome (NAME) to your profile page <i class="fa fa-heart-o" aria-hidden="true"></i></h1>
           <p class="text-center bigText">This is your profile admin where you
           can read, update and delete your profile</p>
-          {% if message %}
-            {% for message in get_flashed_messages() %}
-             <div class="alert alert-success" role="alert">{{ message }}</div>
-            {% endfor %}
+          {% if msg %}
+             <div class="alert alert-success" role="alert">{{ msg }}</div>
           {% endif %}  
           </div>
         </div>
         {% for row in rows %}
-          <div class="">
-          <p class="text-center">{{ row[0] }}</p>
-          <p class="text-center">{{ row[1] }}</p>
-          <p class="text-center">{{ row[2] }}</p>
-          <p class="text-center">{{ row[3] }}</p>
-          <img src="{{ row[4] }}" class="">
+          <div class="profilesContainer">
+          <p class="text-center profText">{{ row[0] }}</p>
+          <h3 class="text-center profHead">{{ row[1] }}</h3>
+          <p class="text-center profText">{{ row[2] }}</p>
+          <p class="text-center profText">{{ row[3] }}</p>
+          <p class="text-center profText">{{ row[4] }}</p>
+          <img src="{{ row[5] }}" class="profImg">
           </div>
         {% endfor %}
       </div> <!-- end row -->
+      <br>
+      <div class="col-md-4 col-md-offset-4">
+      <a class="btn btn-danger btn-block" href="#">Update Profile</a><a class="btn btn-default btn-block" href="#">Log Out</a>
+      </div>
     </div> <!-- end container -->
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
