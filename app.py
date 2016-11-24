@@ -73,7 +73,7 @@ def requires_login(f):
 @app.route("/logout")
 @requires_login
 def logout():
-  session.pop('logged_in', None)
+  session['logged_in'] = False
   flash("You were logged out")
   return redirect(url_for('index'))
 
@@ -125,9 +125,27 @@ def adduser():
 def premium():
   return "This will be the Premium signup page"
 
-@app.route("/user/new")
+# CREATE PROFILE PAGE
+@app.route("/user/new",methods = ['GET', 'POST'])
 def create_profile():
-  return render_template('newProfile.html')
+  if request.method == 'POST':
+    username = request.form['username']
+    location = request.form['location']
+    bio      = request.form['bio']
+    gender   = request.form.getlist('gender')
+    prof_img  = request.form['prof_img']
+
+    db = get.db()
+    db.cursor().execute("INSERT INTO profiles (username,location,bio,gender,prof_img) VALUES (?,?,?,?,?)",(username,location,bio,gender,prof_img))
+    db.commit()
+    msg = "Profile Created!"
+    return redirect(url_for('view_members'))
+  else:
+    return render_template('newProfile.html')
+
+@app.route("/members/view/")
+def view_members():
+  return "This will be view members page"
 
 #custom 404 Route
 @app.errorhandler(404)
