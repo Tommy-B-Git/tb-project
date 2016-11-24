@@ -82,8 +82,8 @@ def logout():
 @requires_login
 def members():
   if session['logged_in']:
-    return "link from here to create profile Page"
-    #return render_tempate("userProfile.html")
+    #return "link from here to create profile Page"
+    return render_template("members.html")
   else:
     return redirect(url_for('index'))
 
