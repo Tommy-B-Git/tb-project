@@ -6,6 +6,7 @@ drop table if exists users;
 
 drop table if exists profiles;
   create table profiles (
+  email text not null,
   username text not null,
   location text not null,
   bio text not null,
