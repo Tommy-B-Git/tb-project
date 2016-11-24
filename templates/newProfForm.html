@@ -1,15 +1,10 @@
-
-
-
-
-
 <!-- Form Name -->
-<form>
+<form action="{{ url_for('create_profile') }}" method="post">
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="textinput">Username</label>  
   <div class="col-md-6">
-  <input id="textinput" name="textinput" type="text" placeholder="username" class="form-control input-md" required="">
+  <input id="textinput" name="username" type="text" placeholder="username" class="form-control input-md" required="">
     
   </div>
 </div>
@@ -37,13 +32,13 @@
   <div class="col-md-4">
   <div class="checkbox">
     <label for="checkboxes-0">
-      <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
+      <input type="checkbox" name="gender" id="checkboxes-0" value="1">
       Male
     </label>
   </div>
   <div class="checkbox">
     <label for="checkboxes-1">
-      <input type="checkbox" name="checkboxes" id="checkboxes-1" value="2">
+      <input type="checkbox" name="gender" id="checkboxes-1" value="2">
       Female
     </label>
   </div>
