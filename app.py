@@ -187,7 +187,7 @@ def view_members():
 
 @app.route("/premium")
 def premium():
-  return "This will be the Premium signup page"
+  return render_template("premium.html")
 
 
 #custom 404 Route
