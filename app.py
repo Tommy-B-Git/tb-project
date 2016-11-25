@@ -60,7 +60,7 @@ def validate(email, password):
         return False
 
 # REQUIRES LOGIN STUFF #
-#######################
+########################
 def requires_login(f):
   @wraps(f)
   def decorated(*args, **kwargs):
@@ -95,9 +95,9 @@ def my_profile():
   conn = sqlite3.connect('var/database.db')
   with conn:
     cur = conn.cursor()
-    #cur.execute('SELECT * FROM profiles WHERE prof_email=(?)', (prof_email,))
+    cur.execute('SELECT * FROM profiles')
     #cur.execute('SELECT * FROM profiles')
-    cur.execute('SELECT * FROM profiles JOIN users USING(email)')
+    #cur.execute('SELECT * FROM profiles JOIN users USING(email)')
     rows = cur.fetchall()
     for row in rows:
       email = row[0]
@@ -148,22 +148,33 @@ def adduser():
   else:
     return render_template("signUp.html")
 
+
 # CREATE PROFILE PAGE
 @app.route("/user/new",methods = ['GET', 'POST'])
 def create_profile():
+  error = None
   if request.method == 'POST':
     email = request.form['email']
     username = request.form['username']
     location = request.form['location']
     bio = request.form['bio']
     gender = request.form['gender']
-    prof_img = request.form['prof_img']
+    
+    ## HANDLE IMAGES ##
+    #prof_img = request.files['prof_img']
+    #new_file = prof_img.filename
+    f = request.files['datafile']
+    new_file = f.filename
+    if new_file == "":
+      return "Please select a file to upload"
+    else:
+      f.save('static/img/' + new_file)
 
     db = get_db()
-    db.cursor().execute("INSERT INTO profiles(email,username,location,bio,gender,prof_img) VALUES (?,?,?,?,?,?)",(email,username,location,bio,gender,prof_img))
+    db.cursor().execute("INSERT INTO profiles(email,username,location,bio,gender,prof_img) VALUES (?,?,?,?,?,?)",(email,username,location,bio,gender,new_file))
     db.commit()
     msg = "Profile Created!"
-    return redirect(url_for('my_profile', msg=msg))
+    return redirect(url_for('my_profile'))
   else:
     return render_template('newProfile.html')
 
