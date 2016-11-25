@@ -1,10 +1,16 @@
 <div class="well">
 <form action="{{ url_for('adduser') }}" method="post">
   <div class="field form-group">
-    <label for="user_email">Email</label>
+    <label for="username">Username</label>
     <br>
     <input autofocus="autofocus" class="form-control" name="user_email"
     type="email" value="{{ request.form.user_email }}">
+  </div>
+  <div class="field form-group">
+    <label for="username">Email</label>
+    <br>
+    <input autofocus="autofocus" class="form-control" name="username"
+    type="text" value="{{ request.form.username }}">
   </div>
   <div class="field form-group">
     <label for="user_password">Password</label>
