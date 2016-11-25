@@ -89,23 +89,14 @@ def members():
 
 # INDIVIDUAL PROFILE PAGE#
 ##########################
-@app.route("/members/profile")
+@app.route("/members/<email>")
 @requires_login
-def my_profile():
+def my_profile(email):
   conn = sqlite3.connect('var/database.db')
   with conn:
     cur = conn.cursor()
-    cur.execute('SELECT * FROM profiles')
-    #cur.execute('SELECT * FROM profiles')
-    #cur.execute('SELECT * FROM profiles JOIN users USING(email)')
+    cur.execute('SELECT * FROM profiles WHERE email = (?)', (email,))
     rows = cur.fetchall()
-    for row in rows:
-      email = row[0]
-      username = row[1]
-      location = row[2]
-      bio = row[3]
-      gender = row[4]
-      prof_img = row[5]
   return render_template('myProfile.html', rows=rows)
 
 # USER LOGIN #
@@ -120,7 +111,7 @@ def login():
     if validate(email, password):
       session['logged_in'] = True
       success = 'You have succesfully logged in'
-      return redirect(url_for('members'))
+      return redirect(url_for('my_profile', email=email))
     else:
       error = "Wrong details, try again!"
   return render_template("login.html", error=error)
