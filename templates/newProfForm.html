@@ -1,5 +1,5 @@
 <!-- Form Name -->
-<form action="{{ url_for('create_profile') }}" method="post">
+<form action="{{ url_for('create_profile') }}" method="post" enctype="multipart/form-data">
 
 <!-- EMAIL -->
 <div class="form-group">
@@ -45,7 +45,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="prof_img">Profile Image</label>
   <div class="col-md-6">
-    <input id="prof_img" name="prof_img" class="input-file form-control input-md" type="file">
+    <input id="prof_img" name="datafile" class="input-file form-control input-md" type="file">
   </div>
 </div>
 
