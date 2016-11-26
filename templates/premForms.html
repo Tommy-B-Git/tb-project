@@ -1,29 +1,40 @@
 <div class="well">
-<form action="#" method="post">
+<form action="{{ url_for('add_premium') }}" method="post">
+  <div class="field form-group">
+    <label for="email">Email</label>
+    <br>
+    <input autofocus="autofocus" class="form-control" name="email"
+    type="text" value="{{ request.form.email }}">
+  </div>
+
+  <div class="field form-group">
+    <label for="password">Password</label>
+    <br>
+    <input autofocus="autofocus" class="form-control" name="password"
+    type="text" value="{{ request.form.password }}">
+  </div>
+
   <div class="field form-group">
     <label for="username">Username</label>
     <br>
     <input autofocus="autofocus" class="form-control" name="username"
     type="text" value="{{ request.form.username }}">
   </div>
-  <div class="field form-group">
-    <label for="email">Email</label>
-    <br>
-    <input autofocus="autofocus" class="form-control" name="email"
-    type="email" value="{{ request.form.email }}">
-  </div>
+
   <div class="field form-group">
     <label for="cc_number">C/C Number</label>
     <br>
     <input autocomplete="off" class="form-control" name="cc_number"
     type="text" value="{{ request.form.cc_number }}">
   </div>
+
  <div class="field form-group">
     <label for="sec_code">Security Code</label>
     <br>
     <input autocomplete="off" class="form-control" name="sec_code"
     type="text" value="{{ request.form.sec_code }}">
   </div>
+
   <div class="field form-group">
     <label for="expiry">Expiry Date</label>
     <select class="months">

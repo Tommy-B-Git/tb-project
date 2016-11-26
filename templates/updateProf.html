@@ -1,0 +1,60 @@
+<!-- Form Name -->
+<form action="{{ url_for('update_profile') }}" method="post" enctype="multipart/form-data">
+
+<!-- EMAIL -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Email</label>
+  <div class="col-md-6">
+  <input id="textinput" name="email" type="text" placeholder="Your email" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- USERNAME-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Username</label>  
+  <div class="col-md-6">
+  <input id="textinput" name="username" type="text" placeholder="username" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- LOCATION-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="location">Location</label>  
+  <div class="col-md-6">
+  <input id="location" name="location" type="text" placeholder="your location" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- BIO -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="bio">About you</label>
+  <div class="col-md-6">                     
+  <input id="bio" name="bio" type="text" placeholder="What do you like?" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- GENDER -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="bio">Gender</label>
+  <div class="col-md-6">
+  <input id="gender" name="gender" type="text" placeholder="Gender" class="form-control input-md" required="">
+  </div>
+</div>
+
+<!-- File Button --> 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="prof_img">Profile Image</label>
+  <div class="col-md-6">
+    <input id="prof_img" name="datafile" class="input-file form-control input-md" type="file">
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="submit_profile"></label>
+  <div class="col-md-6">
+    <button id="submit_profile" name="submit_profile" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+</form>

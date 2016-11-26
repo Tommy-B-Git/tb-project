@@ -28,13 +28,14 @@
           <p class="text-center profText">{{ row[2] }}</p>
           <p class="text-center profText">{{ row[3] }}</p>
           <p class="text-center profText">{{ row[4] }}</p>
-          <img src="{{ row[5] }}" class="profImg">
+          <img src="img/{{ row[5] }}" class="profImg">
           </div>
         {% endfor %}
       </div> <!-- end row -->
       <br>
       <div class="col-md-4 col-md-offset-4">
-      <a class="btn btn-danger btn-block" href="#">Update Profile</a><a
+      <a class="btn btn-success btn-block" href="{{ url_for('create_profile') }}">Create Profile</a>
+      <a class="btn btn-danger btn-block" href="{{ url_for('update_profile') }}">Update Profile</a><a
       class="btn btn-default btn-block" href="{{ url_for('logout') }}">Log Out</a>
       </div>
     </div> <!-- end container -->
