@@ -140,7 +140,7 @@ def adduser():
     return render_template("signUp.html")
 
 
-# CREATE PROFILE PAGE
+# CREATE PROFILE ROUTE
 @app.route("/profile/create",methods = ['GET', 'POST'])
 def create_profile():
   # error = None
@@ -152,8 +152,6 @@ def create_profile():
     gender = request.form['gender']
     
     ## HANDLE IMAGES ##
-    #prof_img = request.files['prof_img']
-    #new_file = prof_img.filename
     f = request.files['datafile']
     new_file = f.filename
     if new_file == "":
@@ -179,7 +177,6 @@ def update_profile():
     location = request.form['location']
     bio = request.form['bio']
     gender = request.form['gender']
-    prof_img = request.form['datafile']
 
     f = request.files['datafile']
     new_file = f.filename
@@ -189,8 +186,8 @@ def update_profile():
     else:
       f.save('static/img/' + new_file)
 
-    db = get_db
-    db.cursor().execute("UPDATE profiles SET email = ?, username = ?,location = ?, bio = ?, gender = ?, prof_img = ?) WHERE email = ?" ,(email,username,location,bio,gender,prof_img))
+    db = get_db()
+    db.cursor().execute("UPDATE profiles SET email=?, username=?,location=?,bio=?, gender=?, prof_img=? WHERE email= ?" ,(email,username,location,bio,gender,new_file,email))
     #cur.execute("UPDATE profiles SET email=?,username=?,location=?,bio=?,gender=?,prof_img=? WHERE email=?",(email,username,location,bio,gender,prof_img))
     db.commit()
     return redirect(url_for('my_profile', email=email))
