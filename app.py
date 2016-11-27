@@ -202,18 +202,12 @@ def update_profile():
 
 @app.route("/members/view")
 def view_members():
- # conn = sqlite3.connect('var/database.db')
- # with conn:
-  #  cur = conn.cursor()
-  #  cur.execute('SELECT * FROM profiles')
-  #  rows = cur.fetchall()
-    #for row in rows:
-      #dbEmail = row[0]
-      #dbPass = row[1]
-      #dbPass = row[1]
-      #dbPass = row[1]
-      #dbPass = row[1]
-  return "This will be the View Members page"
+ conn = sqlite3.connect('var/database.db')
+ with conn:
+   cur = conn.cursor()
+   cur.execute('SELECT * FROM profiles')
+   rows = cur.fetchall()
+   return render_template('allMembers.html', rows=rows)
 
 @app.route("/premium")
 def premium():
