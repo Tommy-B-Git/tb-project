@@ -200,9 +200,20 @@ def update_profile():
     return render_template('update.html')
 
 # DELETE PROFILE #
-@app.route("/profile/delete", methods = ['POST'])
+@app.route("/profile/delete")
+@requires_login
 def delete_profile():
-  return "this is the delete profile page"
+  return render_template('deleteProfile.html')
+
+@app.route("/delete", methods = ['POST'])
+def delete():
+  conn = sqlite3.connect('var/database.db')
+  with conn:
+    cur = conn.cursor()
+    cur.execute('DELETE * FROM profiles WHERE email = (?)', (email,))
+    flash('Your profile is deleted')
+  return render_template('index.html')
+
 
 @app.route("/members/view")
 def view_members():
