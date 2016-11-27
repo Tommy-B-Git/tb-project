@@ -1,6 +1,7 @@
 import bcrypt
 from functools import wraps
 from flask import Flask, redirect, url_for, abort, request, render_template, json, g, session, flash
+from werkzeug.utils import secure_filename
 import sqlite3
 
 #Application Object
@@ -110,7 +111,7 @@ def login():
     password = request.form['user_password']
     if validate(email, password) or validate_prem(email, password):
       session['logged_in'] = True
-      success = 'You have succesfully logged in'
+      flash('You have succesfully logged in')
       return redirect(url_for('my_profile', email=email))
     else:
       error = "Wrong details, try again!"
@@ -143,7 +144,8 @@ def adduser():
 # CREATE PROFILE ROUTE
 @app.route("/profile/create",methods = ['GET', 'POST'])
 def create_profile():
-  # error = None
+  error = None
+  msg = None
   if request.method == 'POST':
     email = request.form['email']
     username = request.form['username']
@@ -163,7 +165,7 @@ def create_profile():
     db = get_db()
     db.cursor().execute("INSERT INTO profiles(email,username,location,bio,gender,prof_img) VALUES (?,?,?,?,?,?)",(email,username,location,bio,gender,new_file))
     db.commit()
-    msg = "Profile Created!"
+    flash("Profile Created!")
     return redirect(url_for('my_profile', email=email))
   else:
     return render_template('newProfile.html')
@@ -171,6 +173,8 @@ def create_profile():
 # UPDATE PROFILE ROUTE #
 @app.route("/profile/update", methods = ['GET', 'POST'])
 def update_profile():
+  error = None
+  msg = None
   if request.method == 'POST':
     email = request.form['email']
     username = request.form['username']
@@ -190,9 +194,15 @@ def update_profile():
     db.cursor().execute("UPDATE profiles SET email=?, username=?,location=?,bio=?, gender=?, prof_img=? WHERE email= ?" ,(email,username,location,bio,gender,new_file,email))
     #cur.execute("UPDATE profiles SET email=?,username=?,location=?,bio=?,gender=?,prof_img=? WHERE email=?",(email,username,location,bio,gender,prof_img))
     db.commit()
+    flash("Your profile is updated")
     return redirect(url_for('my_profile', email=email))
   else:
     return render_template('update.html')
+
+# DELETE PROFILE #
+@app.route("/profile/delete", methods = ['POST'])
+def delete_profile():
+  return "this is the delete profile page"
 
 @app.route("/members/view")
 def view_members():
