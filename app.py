@@ -114,7 +114,7 @@ def login():
       flash('You have succesfully logged in')
       return redirect(url_for('my_profile', email=email))
     else:
-      error = "Wrong details, try again!"
+      flash('Wrong details, try again!')
   return render_template("login.html")
 
 
@@ -198,21 +198,6 @@ def update_profile():
     return redirect(url_for('my_profile', email=email))
   else:
     return render_template('update.html')
-
-# DELETE PROFILE #
-@app.route("/profile/delete")
-@requires_login
-def delete_profile():
-  return render_template('deleteProfile.html')
-
-@app.route("/delete", methods = ['POST'])
-def delete():
-  conn = sqlite3.connect('var/database.db')
-  with conn:
-    cur = conn.cursor()
-    cur.execute('DELETE * FROM profiles WHERE email = (?)', (email,))
-    flash('Your profile is deleted')
-  return render_template('index.html')
 
 
 @app.route("/members/view")
