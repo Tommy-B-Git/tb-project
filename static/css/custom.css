@@ -46,3 +46,7 @@ h2{
   width: 30vw;
   margin-bottom: 2vh;
 }
+
+#map{
+  height: 100%;
+}
