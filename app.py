@@ -218,6 +218,7 @@ def update_profile():
 @app.route("/members/view")
 def view_members():
  conn = sqlite3.connect('var/database.db')
+ session['logged_in'] = False
  with conn:
    cur = conn.cursor()
    cur.execute('SELECT * FROM profiles')
