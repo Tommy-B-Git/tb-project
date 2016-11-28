@@ -18,7 +18,7 @@ GoogleMaps(app, key="AIzaSyAdclqNA7O-THQMxSSJEGvM00SNBvannoI")
 
 @app.route("/")
 def index():
- return render_template("base.html")
+ return render_template("base.html"), 200
 
 
 # Start of DB stuff
