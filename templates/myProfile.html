@@ -30,37 +30,25 @@
           <!--<p class="text-center profText">{{ row[0] }}</p>-->
           <img src="../static/img/{{ row[5] }}" class="img-responsive profImg center-block">
           <h3 class="text-center profHead">{{ row[1] }}</h3>
-          <p class="text-center profText">{{ row[2] }}</p>
-          <p class="text-center profText">{{ row[3] }}</p>
-          <p class="text-center profText">{{ row[4] }}</p>
+          <p class="text-center profText">Location: {{ row[2] }}</p>
+          <p class="text-center profText">My likes: {{ row[3] }}</p>
+          <p class="text-center profText">I'm looking for a: {{ row[4] }}</p>
+          <div id="simple-map" class="center-block">{{googlemap("simple-map", 37.4419, -122.1419)}}</div>
           </div>
         {% endfor %}
-      <div id="map"></div>
-      <script>
-        function initMap() {
-          var uluru = {lat: -25.363, lng: 131.044};
-          var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: uluru
-          });
-          var marker = new google.maps.Marker({
-            position: uluru,
-           map: map
-          });
-        }
-      </script>
       </div> <!-- end row -->
       <br>
       <div class="col-md-4 col-md-offset-4">
       <a class="btn btn-success btn-block" href="{{ url_for('create_profile') }}">Create Profile</a>
       <a class="btn btn-primary btn-block" href="{{ url_for('update_profile') }}">Update Profile</a>
-      <a class="pull-left" href="{{ url_for('logout') }}">Log Out</a>
-      <a class="pull-right" href="{{ url_for('view_members') }}">View all members</a>
+      <a class="pull-left linkyPadd" href="{{ url_for('logout') }}">Log Out</a>
+      <a class="pull-right linkyPadd" href="{{ url_for('view_members') }}">View all members</a>
+      <br>
+      <br>
       </div>
     </div> <!-- end container -->
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
   <!--<script src="{{ url_for('static', filename='js/custom.js') }}"></script>-->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdclqNA7O-THQMxSSJEGvM00SNBvannoI &v=3.26&callback=initMap"></script>
 </html>
