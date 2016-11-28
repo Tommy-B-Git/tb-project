@@ -1,6 +1,9 @@
 # AWT Coursework 1 - Wednesday 30th November 2016
 
-Web application created using Python Flask demonstrating: Well designed URL hierarchy, routing static files, requests, redirects, responses and templating.
+Web application created using Python Flask demonstrating: Well designed URL
+hierarchy, routing static files, requests, redirects, responses and templating,
+sessions, logging, testing, CSS, JavaScript, multiple
+users, and data storage.
 
 ## Getting Started
 
@@ -16,16 +19,18 @@ Follow these step by step instructions to get your development environment runni
 4. In the Terminal window type:
   ssh tc@localhost -p 2222
   when prompted for password type 'foo'.
-5. Navigate to your root folder of the application, i.e., 'cd src'
+5. Navigate to your root folder of the application, i.e., 'cd tb-project'
 
-## Password
+##Log In & Authentication
 
-To log into admin area u/n 'your name' p/w 'your name'. Validation will not
-permit anything else or an empty string.
+To create a profile, click on one of the buttons on the home screen and follow
+instructions. After registration, you will redirect to the login screen.  
+
 
 ## Deployment
 
-1. In Terminal, open a new tab to run your server. Navigate to your root folder once again, in this case, 'cd src'
+1. In Terminal, open a new tab to run your server. Navigate to your root folder
+once again, in this case, 'cd tb-project'
 2. To run your application, type python app.py
 3. You're welcome ;-) 
 
