@@ -103,7 +103,9 @@ def my_profile(email):
     cur = conn.cursor()
     cur.execute('SELECT * FROM profiles WHERE email = (?)', (email,))
     rows = cur.fetchall()
-  return render_template('myProfile.html', rows=rows)
+    for row in rows:
+      username = row[1] 
+  return render_template('myProfile.html', rows=rows, username=username)
 
 # USER LOGIN #
 ##############
@@ -266,5 +268,6 @@ def validate_prem(email, password):
 def page_not_found():
   return render_template('404.html'), 404
 
-if __name__ == "__main__":
+
+if __name__ =='__main__':
   app.run(host='0.0.0.0', debug=True)
