@@ -2,13 +2,18 @@ import bcrypt
 from functools import wraps
 from flask import Flask, redirect, url_for, abort, request, render_template, json, g, session, flash
 from werkzeug.utils import secure_filename
+from flask_googlemaps import GoogleMaps
+from flask_googlemaps import Map
 import sqlite3
+import geocoder
 
 #Application Object
 app = Flask(__name__)
 db_location = 'var/database.db'
 
 app.secret_key = 'a_really_secret_key'
+
+GoogleMaps(app, key="AIzaSyAdclqNA7O-THQMxSSJEGvM00SNBvannoI")
 
 
 @app.route("/")
@@ -152,7 +157,10 @@ def create_profile():
     location = request.form['location']
     bio = request.form['bio']
     gender = request.form['gender']
-    
+   
+    #g = geocoder.google(location)
+    #coords = g.latlng
+
     ## HANDLE IMAGES ##
     f = request.files['datafile']
     new_file = f.filename
@@ -166,7 +174,7 @@ def create_profile():
     db.cursor().execute("INSERT INTO profiles(email,username,location,bio,gender,prof_img) VALUES (?,?,?,?,?,?)",(email,username,location,bio,gender,new_file))
     db.commit()
     flash("Profile Created!")
-    return redirect(url_for('my_profile', email=email))
+    return redirect(url_for('my_profile', email=email, location=location))
   else:
     return render_template('newProfile.html')
 
@@ -199,6 +207,11 @@ def update_profile():
   else:
     return render_template('update.html')
 
+# DELETE PROFILE #
+#def delete_profile():
+ # db = get_db()
+ # db.cursor().execute("DELETE * FROM profiles WHERE email = (?)', (email,))
+ # db.commit()
 
 @app.route("/members/view")
 def view_members():
