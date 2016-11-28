@@ -105,7 +105,7 @@ def my_profile(email):
     rows = cur.fetchall()
     for row in rows:
       username = row[1] 
-  return render_template('myProfile.html', rows=rows, username=username)
+  return render_template('myProfile.html', rows=rows)
 
 # USER LOGIN #
 ##############
