@@ -4,6 +4,14 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+.mainBGImage {
+    background: url(../img/callbg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
 h1 {
  font-family: 'Open Sans', sans-serif;
  font-weight: bold;
